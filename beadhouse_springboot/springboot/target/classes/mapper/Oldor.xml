@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.OldorMapper">
+
+    <select id="queryByPage" resultType="com.example.springboot.entity.Oldor">
+    select * from oldor
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name}, '%')
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+            <if test="blood != null and blood != ''">
+                AND blood = #{blood}
+            </if>
+        </where>
+             limit #{pageNum}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(id) from oldor
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name}, '%')
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+            <if test="blood != null and blood != ''">
+                AND blood = #{blood}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryNormal" resultType="java.lang.String">
+        select name from oldor
+            where
+                    systolic_pressure between 90 and 120
+
+                 And   diastolic_pressure between 60 and 80
+
+                  And  blood_sugar between 4.4 and 7.8
+
+    </select>
+
+    <select id="queryHigher" resultType="java.lang.String">
+        select name from oldor
+        where
+            systolic_pressure between 120 and 139
+           or
+            diastolic_pressure between 80 and 89
+           or
+            blood_sugar between 7.8 and 10
+    </select>
+
+    <select id="queryLower" resultType="java.lang.String">
+        select name from oldor
+            where
+                systolic_pressure between 80 and 89
+            or
+                diastolic_pressure between 45 and 60
+            or
+                blood_sugar &lt; 4.4
+    </select>
+
+    <select id="queryNoReport" resultType="java.lang.String">
+        select name from oldor
+            where systolic_pressure is null
+                or diastolic_pressure is null
+                or blood_sugar is null
+    </select>
+    <select id="selectBMIThin" resultType="java.lang.Integer">
+        select count(id) from oldor
+                         where (weight/height/height *100 *100) &lt; 18.5
+    </select>
+    <select id="selectBMINormal" resultType="java.lang.Integer">
+        select count(id) from oldor
+                         where (weight/height/height *100 *100) between 18.5 and 25
+    </select>
+    <select id="selectBMIOverWeight" resultType="java.lang.Integer">
+        select count(id) from oldor
+                        where (weight/height/height *100 *100) between 25 and 27
+    </select>
+    <select id="selectBMIFat" resultType="java.lang.Integer">
+        select count(id) from oldor
+                        where (weight/height/height *100 *100) &gt; 27
+    </select>
+    <select id="selectHight1" resultType="java.lang.Integer">
+        select count(id) from oldor
+                        where height between 150 and 160
+    </select>
+    <select id="selectHight2" resultType="java.lang.Integer">
+        select count(id) from oldor
+                        where height between 160 and 170
+    </select>
+    <select id="selectHight3" resultType="java.lang.Integer">
+        select count(id) from oldor
+                        where height between 170 and 180
+    </select>
+    <select id="selectHight4" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where height between 180 and 190
+    </select>
+    <select id="selectHight5" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where height between 190 and 200
+    </select>
+    <select id="selectWeight1" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where weight between 45 and 54
+    </select>
+    <select id="selectWeight2" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where weight between 54 and 63
+    </select>
+    <select id="selectWeight3" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where weight between 63 and 72
+    </select>
+    <select id="selectWeight4" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where weight between 72 and 81
+    </select>
+    <select id="selectWeight5" resultType="java.lang.Integer">
+        select count(id) from oldor
+                    where weight between 81 and 90
+    </select>
+
+</mapper>
+
